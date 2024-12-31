@@ -30,7 +30,8 @@ Video: https://www.youtube.com/watch?v=C1Hj9kfY5qc
 1. The following three boards are supported:
   - m5stack-core (m5stack Basic)
   - m5stack-core2 (m5stack core2)
-  - (provisional) m5stack-cores3 (m5stack coreS3) *No buttons implemented.
+  - m5stack-cores3 (m5stack coreS3) 
+  - - Implementing touch buttons using [gob/gob_unifiedButton](https://github.com/GOB52/gob_unifiedButton)
 
 2. Development environment
   - platformIO & vscode

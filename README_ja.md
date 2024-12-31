@@ -31,7 +31,8 @@ fork元のm5stack-avatarがv0.10.0で凍結となってます。
 - 対象boardは次の3つ
   - m5stack-core（m5stack Basic）
   - m5stack-core2(m5stack core2）
-  - （暫定）m5stack-cores3(m5stack coreS3) ※ボタン実装していません。
+  - m5stack-cores3(m5stack coreS3) 
+  - - [gob/gob_unifiedButton](https://github.com/GOB52/gob_unifiedButton)を使ってタッチボタンを実装
 
 - 開発環境
   - platformIO　& vscode
@@ -44,6 +45,7 @@ fork元のm5stack-avatarがv0.10.0で凍結となってます。
 - platformio.iniファイルにあるdefault_envを使用するm5stackに合わせる
   - m5stack basicの場合は、m5stack-core
   - m5stack core2の場合は、m5stack-core2
+  - m5stack cores3の場合は、m5stack-cores3
 
 ```
 [platformio]
