@@ -2,6 +2,9 @@
 #include <Avatar.h>
 #include <M5Unified.h>
 #include <tasks/LipSync.h>
+#include <gob_unifiedButton.hpp>   // touch buttons for cores3 
+
+goblib::UnifiedButton unifiedButton;  // touch buttons for cores3 
 
 using namespace m5avatar;
 
@@ -13,6 +16,7 @@ Avatar avatar;
 void setup() {
   int iret;
   M5.begin();
+  unifiedButton.begin(&M5.Display); // touch buttons for cores3 
   // For Kanji-to-speech mode (requires dictionary file saved on microSD)
   // See http://blog-yama.a-quest.com/?eid=970195
   // iret = TTS.createK(AQUESTALK_KEY);
@@ -21,7 +25,7 @@ void setup() {
     M5.Display.println("ERR:TTS.create()");
   }
 
-  M5.Lcd.setBrightness(30);
+  M5.Lcd.setBrightness(100);
   M5.Lcd.clear();
   avatar.init();
   avatar.addTask(lipSync, "lipSync");
@@ -29,6 +33,7 @@ void setup() {
 
 void loop() {
   M5.update();
+  unifiedButton.update();  // touch buttons for cores3 
   if (M5.BtnA.wasPressed()) {
     // Need to initialize with createK(AQUESTALK_KEY)
     // TTS.play("こんにちは。", 80);
