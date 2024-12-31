@@ -1,9 +1,6 @@
 # Notice
 
-This repository is temporarily frozen at v0.10.0. (Due to the absence of the administrator) We cannot respond to pull requests or ISSUE received.
-
-- We may update this repository in the future when we find bugs due to version upgrades of related libraries.
-- If there is anyone who can maintain this repository, please let us know.
+The original m5stack-avatar version is frozen at v0.10.0. I created a version that reflects AquesTalk ESP32 2.4.4 (2024/10/30), so I'll share it here.
 
 # M5Stack-Avatar
 
@@ -30,107 +27,26 @@ Video: https://www.youtube.com/watch?v=C1Hj9kfY5qc
 
 ### Prerequisites
 
-* USB Driver is installed throwgh [Getting Started: Installing the USB Driver](http://www.m5stack.com/assets/docs/)
-* Any of IDE is set up
-  * This library is confirmed on __Arduino IDE__ and __Platform IO__ for now
+1. The following three boards are supported:
+  - m5stack-core (m5stack Basic)
+  - m5stack-core2 (m5stack core2)
+  - (provisional) m5stack-cores3 (m5stack coreS3) *No buttons implemented.
 
-### Using Arduino IDE
-
-* On Arduino IDE, Select "Sketch > Include Library > Manage Libraries..."
-* Search "m5stack avatar"
-* Select "M5Stack_Avatar" from the results then click "Install"
-* The library gets installed
-
-### Using Platform IO
-
-* Initialize your Platform IO project
-```sh
-mkdir my-avatar
-cd my-avatar
-platformio init -d . -b m5stack-core-esp32
-```
-* Install the library and its dependency
-```sh
-platformio lib install M5Unified
-platformio lib install M5Stack-Avatar
-```
-* The library gets downloaded from repository to .piolibdeps directory
+2. Development environment
+  - platformIO & vscode
+  - m1 mac
 
 ## Usage
 
-```cpp
-
-#include <M5Unified.h>
-#include <Avatar.h>
-
-using namespace m5avatar;
-
-Avatar avatar;
-
-void setup()
-{
-  M5.begin();
-  avatar.init(); // start drawing
-}
-
-void loop()
-{
-  // avatar's face updates in another thread
-  // so no need to loop-by-loop rendering
-}
-```
-
-### Using LipSync
-
-* setup AquesTalk-ESP32 (http://blog-yama.a-quest.com/?eid=970195).
-  * (For parsing Kainji statement) Copy the dictionary file from above link to the microSD card.
-  * You don't need to copy AquesTalkTTS files. They are included in this library.
-
-* Write below to open avatar mouth according to the audio output.
-
-```cpp
-#include <AquesTalkTTS.h>
-#include <M5Unified.h>
-#include <Avatar.h>
-#include <tasks/LipSync.h>
-
-using namespace m5avatar;
-
-// AquesTalk License Key
-// NULL or wrong value is just ignored
-const char* AQUESTALK_KEY = "XXXX-XXXX-XXXX-XXXX";
-Avatar avatar;
-
-void setup() {
-  int iret;
-  M5.begin();
-  // For Kanji-to-speech mode (requires dictionary file saved on microSD)
-  // iret = TTS.createK(AQUESTALK_KEY);
-  iret = TTS.create(AQUESTALK_KEY);
-  avatar.init();
-  avatar.addTask(lipSync, "lipSync");
-}
-
-void loop() {
-  M5.update();
-  if (M5.BtnA.wasPressed()) {
-    // For Kanji-to-speech mode
-    // TTS.play("こんにちは。", 80);
-    TTS.play("konnichiwa", 80);
-  }
-}
+1. Clone this repository in the platformIO project directory
+1. Open the cloned local repository folder in platformIO
+1. Make sure to match the default_env in the platformio.ini file to the m5stack you are using
+  - For m5stack basic, use m5stack-core
+  - For m5stack core2, use m5stack-core2
 
 ```
+[platformio]
+default_envs = m5stack-core2
+```
 
-### Further usage
-
-see `examples` directory.
-
-### Migration from 0.7.x to 0.8.x
-
-`M5Stack-Avatar` now depends on `M5Unified`, the integrated library for all devices of M5Stack series.
-Since 0.8.0, Sketches with avatar should include `M5Unified.h` instead of `M5Stack.h` or `M5Core2.h`
-
-### Notes for v0.10.0
-
-Some applications may reboot due to insufficient stack size for other tasks. In such cases, increase the stack size of the relevant task.
+4. Since we created main.cpp by referring to the talk.ino file in the `examples/talk` directory, we should be able to build/deploy it for now.
